@@ -19,7 +19,7 @@
         
         <!-- Header Section -->
         <header class="text-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Sentence Translator</h1>
+            <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Finolo Translator</h1>
             <p class="text-sm text-gray-500 mt-1">Type your text below and watch it translate instantly.</p>
         </header>
 
@@ -80,6 +80,11 @@
                     i++;
                     continue;
                 }
+                if (currentWord === "wo" && nextWord === "lu") {
+                    translatedWords.push("home");
+                    i++;
+                    continue;
+                }
 
                 if (currentWord === "yu") {
                     translatedWords.push("you");
@@ -87,6 +92,16 @@
                     translatedWords.push("me")
                 } else if (currentWord === "ka") {
                     translatedWords.push("object");
+                } else if (currentWord === "lu") {
+                    translatedWords.push("place");
+                } else if (currentWord === "ti") {
+                    translatedWords.push("time");
+                } else if (currentWord === "wa") {
+                    translatedWords.push("water");
+                } else if (currentWord === "fa") {
+                    translatedWords.push("fire");
+                } else if (currentWord === "lo") {
+                    translatedWords.push("Word");
                 } else if (currentWord === "ai") {
                     translatedWords.push("mind");
                 } else if (currentWord === "mo") {
