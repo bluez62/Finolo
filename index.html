@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Translator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen flex items-center justify-center p-4">
+
+    <main class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8 transition-all duration-300">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Sentence Translator</h1>
+            <p class="text-sm text-gray-500 mt-1">Type your text below and watch it translate instantly.</p>
+        </header>
+
+        <!-- Translation Form / Input Section -->
+        <section class="space-y-4">
+            <div>
+                <label for="sentenceInput" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Input Sentence</label>
+                <input 
+                    type="text" 
+                    id="sentenceInput" 
+                    placeholder="e.g., Yu wo ai" 
+                    class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800 transition duration-200"
+                />
+            </div>
+
+            <button 
+                id="translateBtn" 
+                class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center cursor-pointer"
+            >
+                Translate
+            </button>
+        </section>
+
+        <!-- Output Display Section -->
+        <section class="mt-6 pt-6 border-t border-gray-100">
+            <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Translated Output</h2>
+            <div 
+                id="outputArea" 
+                class="w-full min-h-[50px] p-4 bg-gray-50 rounded-xl border border-gray-200 text-gray-800 flex items-center transition-all duration-200"
+            >
+                <span class="text-gray-400 italic">Your translation will appear here...</span>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        /**
+         * Translates a given sentence based on specific custom lookup rules.
+         * @param {string} sentence - The input string to translate.
+         * @returns {string} - The translated output string.
+         */
+        function translateSentence(sentence) {
+            let words = sentence.toLowerCase().trim().split(/\s+/);
+            let translatedWords = [];
+
+            for (let i = 0; i < words.length; i++) {
+                let currentWord = words[i];
+                let nextWord = words[i + 1];
+
+                if (currentWord === "yu" && nextWord === "wo") {
+                    translatedWords.push("your");
+                    i++;
+                    continue;
+                }
+
+                if (currentWord === "yu") {
+                    translatedWords.push("you");
+                } else if (currentWord === "ai") {
+                    translatedWords.push("mind");
+                } else if (currentWord === "mo") {
+                    translatedWords.push("good");
+                } else if (currentWord === "sa") {
+                    translatedWords.push("how");
+                } else {
+                    translatedWords.push(currentWord);
+                }
+            }
+
+            return translatedWords.join(" ");
+        }
+
+        // DOM Element References
+        const sentenceInput = document.getElementById('sentenceInput');
+        const translateBtn = document.getElementById('translateBtn');
+        const outputArea = document.getElementById('outputArea');
+
+        /**
+         * Handles the translation action and updates the UI.
+         */
+        function handleTranslation() {
+            const text = sentenceInput.value;
+            
+            if (!text.trim()) {
+                outputArea.innerHTML = '<span class="text-gray-400 italic">Please enter a sentence to translate.</span>';
+                return;
+            }
+
+            const result = translateSentence(text);
+            
+            // Render the result cleanly with animation effect
+            outputArea.classList.remove('bg-gray-50');
+            outputArea.classList.add('bg-indigo-50/50');
+            outputArea.textContent = result;
+            
+            // Reset background highlight gently after a short duration
+            setTimeout(() => {
+                outputArea.classList.remove('bg-indigo-50/50');
+                outputArea.classList.add('bg-gray-50');
+            }, 300);
+        }
+
+        // Event Listeners for click and keyboard 'Enter'
+        translateBtn.addEventListener('click', handleTranslation);
+        
+        sentenceInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleTranslation();
+            }
+        });
+    </script>
+</body>
+</html>
