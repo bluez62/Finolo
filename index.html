@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentence Translator</title>
+    <title>Finolo translator</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -75,9 +75,18 @@
                     i++;
                     continue;
                 }
+                if (currentWord === "mi" && nextWord === "wo") {
+                    translatedWords.push("my");
+                    i++;
+                    continue;
+                }
 
                 if (currentWord === "yu") {
                     translatedWords.push("you");
+                } else if (currentWord === "mi") {
+                    translatedWords.push("me")
+                } else if (currentWord === "ka") {
+                    translatedWords.push("object");
                 } else if (currentWord === "ai") {
                     translatedWords.push("mind");
                 } else if (currentWord === "mo") {
